@@ -78,8 +78,14 @@ class Calculator {
                 break;
             }
         }
-        int c = CalcArab(number1,number2,x); // (int)
-        return Rim[c];
+        int c = CalcArab(number1,number2,x);
+
+        try {return Rim[c];}
+        catch (ArrayIndexOutOfBoundsException e){
+            c=0-c;
+            System.out.print("-");
+            return Rim[c];
+        }
     }
 
     public static String Eq (String[] p) {
