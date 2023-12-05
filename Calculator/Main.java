@@ -16,10 +16,15 @@ class Main {
         if (input!=""){
             p=input.split(" ");
         }else{
-            System.out.print("Cтрока не является математической операцией ");
+            System.out.print("2w");
             return Error;
         }
-        try {p[1]=""; p[2]="";}
+        try {if (p[1]==""){
+        return Error;
+        }if (p[2]==""){
+            return Error;
+        }
+        }
         catch (ArrayIndexOutOfBoundsException e){
             System.out.print("Cтрока не является математической операцией ");
             return Error;
@@ -28,8 +33,12 @@ class Main {
             System.out.print("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *) ");
             return Error;
         }
-        return Error;
+        return String.valueOf(Eq(p));
+
     }
+
+
+
     public static String Eq (String[] p) {
         String number11 = p[0];
         String x = p[1];
