@@ -2,32 +2,30 @@ package Calculator;
 
 import java.util.Scanner;
 
-class Calculator {
+class Main {
     public static void main(String[] args){
         Scanner y = new Scanner(System.in);
         System.out.println("Введите выражение через пробел");
         String input = y.nextLine();
-        String resoult = Error(input);
+        String resoult = calc(input);
         System.out.println(resoult);
     }
-    public static String Error (String input){
-        String Error = "Ошибка, формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)";
+    public static String calc (String input){
+        String Error = "throws Exception";
         String [] p ;
         if (input!=""){
             p=input.split(" ");
         }else{
+            System.out.print("Cтрока не является математической операцией ");
             return Error;
         }
-        try {if (p[1]==""){
-            return Error;
-        }else if (p[2]==""){
-            return Error;
-        }
-        }
+        try {p[1]=""; p[2]="";}
         catch (ArrayIndexOutOfBoundsException e){
+            System.out.print("Cтрока не является математической операцией ");
             return Error;
         }
         if(p.length>3){
+            System.out.print("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *) ");
             return Error;
         }
         if (RimisArab(input)==0){
@@ -94,17 +92,18 @@ class Calculator {
         String number22 = p[2];
         int number1;
         int number2;
-        try{number2 = Integer.parseInt(number22);}
-        catch (NumberFormatException e){
-            return Error("Ошибка");
+        try {
+            number1 = Integer.parseInt(number11);
+            number2 = Integer.parseInt(number22);
         }
-        number1 = Integer.parseInt(number11);
-
+        catch (NumberFormatException e){
+            return calc("Ошибка");
+        }
         return String.valueOf(CalcArab(number1,number2,x));
     }
     public static int CalcArab (int number1,int number2, String x){
         int result=0;
-        if (number1>=0&&number1<=10&&number2>=0&&number2<=10){
+        if (number1>0&&number1<11&&number2>0&&number2<11){
             switch (x) {
                 case "+":
                     result=number1+number2;
@@ -116,17 +115,13 @@ class Calculator {
                     result=number1*number2;
                     break;
                 case"/":
-                    if (number2==0){
-                        System.out.println("Делить на ноль нельзя");
-                        result=0;
-                    }
                     result=number1/number2;
                     break;
                 default:
-                    System.out.println("Ошибка");
-            }return result;
+                    System.out.println("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
+            }
         }else {
-            System.out.println("Ошибка");
+            System.out.println("Числа должны быть от 1 до 10 включительно");
         }return result;
     }
 }
