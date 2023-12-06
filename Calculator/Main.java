@@ -1,5 +1,6 @@
 package Calculator;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 class Main {
@@ -10,48 +11,31 @@ class Main {
         String resoult = calc(input);
         System.out.println(resoult);
     }
-    public static String calc (String input){
-        String Error = "throws Exception";
+    public static String calc (String input) throws ArrayIndexOutOfBoundsException {
         String [] p ;
-        if (input!=""){
-            p=input.split(" ");
-        }else{
-            System.out.print("Cтрока не является математической операцией. ");
-            return Error;
+        if (input==""){
+            throw new ArrayIndexOutOfBoundsException("Строка не является математической операцией");
         }
-        try {if (p[1]==""){
-        return Error;
-        }if (p[2]==""){
-            return Error;
-        }
-        }
-        catch (ArrayIndexOutOfBoundsException e){
-            System.out.print("Cтрока не является математической операцией. ");
-            return Error;
-        }
-        if(p.length>3){
-            System.out.print("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *). ");
-            return Error;
+        p=input.split(" ");
+        if (p.length<3||p.length>3) {
+            throw new ArrayIndexOutOfBoundsException("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
         }
         return String.valueOf(Eq(p));
-
     }
+
     public static String Eq (String[] p) {
         String number11 = p[0];
         String x = p[1];
         String number22 = p[2];
-        int number1;
-        int number2;
-        try {
-            number1 = Integer.parseInt(number11);
-            number2 = Integer.parseInt(number22);
-        }
+        int number1 = 0;
+        int number2 = 0;
+        try {number1 = Integer.parseInt(number11);number2 = Integer.parseInt(number22);}
         catch (NumberFormatException e){
-            return calc("Ошибка");
+            throw new NumberFormatException("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
         }
         return String.valueOf(CalcArab(number1,number2,x));
     }
-    public static int CalcArab (int number1,int number2, String x){
+    public static int CalcArab (int number1,int number2, String x) throws NumberFormatException {
         int result=0;
         if (number1>0&&number1<11&&number2>0&&number2<11){
             switch (x) {
@@ -68,10 +52,10 @@ class Main {
                     result=number1/number2;
                     break;
                 default:
-                    System.out.println("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
+                    throw new NumberFormatException("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
             }
         }else {
-            System.out.println("Числа должны быть от 1 до 10 включительно");
+            throw new NumberFormatException("Числа должны быть от 1 до 10 включительно");
         }return result;
     }
 }
